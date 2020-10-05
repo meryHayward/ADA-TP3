@@ -52,5 +52,33 @@ body {
         }
         }
     }
+    .main{
+        font-size: 15px;
+        .main-form{
+            display: flex;
+            justify-content: flex-end;    
+            input{
+            width: 243px;
+            height: 34px;
+            padding: 6px 12px;
+            font-size: 14px;
+            line-height: 1.42857143;
+            color: #555;
+            background-color: #fff;
+            background-image: none;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            }
+        }
+        .main-table{
+            width: 100%;
+            max-width: 100%;
+            margin-bottom: 20px;
+            border-collapse: collapse;
+            margin-top: 30px;
+            border-bottom: 1px;
+        }          
+    }
 }
+
     
