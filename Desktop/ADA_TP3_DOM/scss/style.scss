@@ -17,14 +17,15 @@ body {
         background: #fff;
         margin: 25px 0 0 0;
         border-radius: 3px;
-        width:80vw;
+        width:83vw;
+
         box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
         
         .container-header{
         width: 100%;
         background: #435d7d;
         color: #fff;
-        padding: 20px;
+        padding: 15px 30px;
         border-radius: 3px 3px 0 0; 
         display:flex;
         justify-content: space-between;
@@ -47,13 +48,12 @@ body {
             color: #fff;
             font-size: 13px;
             border: none;
-            width: 200px;
-            height: 40px;
+            width: 180px;
+            height: 35px;
             border-radius: 2px;
             border: none;
             outline: none;
-            margin-left: 10px;
-            background-color: rgb(106, 189, 106);
+            background-color: rgb(92,184,92);
             p{
                 margin: 0 0 0 10px;
             }
@@ -61,7 +61,7 @@ body {
             
     }
         main{
-            font-size: 15px;
+            font-size: 13px;
             margin: 30px 20px;
             .main-form{
                 display: flex;
@@ -87,11 +87,13 @@ body {
                 width: 100%;
                 margin: 30px 0 20px 0;
                 border-collapse: collapse;
+                vertical-align: middle;
+                text-align: left;
                 thead tr th{
                     padding: 0 0 20px 0;
                 }
                 #table-body{
-                    border-top: 1px solid #8d8d8d; 
+                    border-top: 2px solid #e0e0e0; 
                 }
 
             }          
