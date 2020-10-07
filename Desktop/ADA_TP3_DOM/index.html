@@ -11,13 +11,13 @@
 </head>
 
 <body>
-    <section class="container">
+    <section class="container" style="display: none;">
        
             <header class="container-header">
                <h2>Manage <span>Employees</span></h2>
                 <button type="button" class="container-btn"><i class="material-icons">&#xE147;</i><p>Add New Employee</p></button>
             </header>
-            <main >
+            <main>
                 <form class="main-form"><input id="search" type="text" placeholder="Filter"></form>
                 <table class="main-table">
                     <thead>
@@ -38,6 +38,33 @@
                 </table>
             </main>
     </section>
+     
+    <section class="modal">
+        <div class="modal-header">
+            <h4>Add Employee</h4>
+            <i class="material-icons">close</i>
+        </div>
+        <form class="modal-form" action="">
+            <label for="name">Name
+                <input type="text" id="name">
+            </label>
+            <label for="email">Email
+                <input type="text" id="email">
+            </label>
+            <label for="address">Address
+                <textarea type="text" id="address"> </textarea>
+            </label>
+            <label for="phone">Phone
+                <input type="text" id="phone">
+            </label>
+        </form>
+        <div class="modal-footer">
+            <button class="btn-cancel" type="button">Cancel</button>
+            <button class="btn-add">Add</button>
+        </div>
+        
+    </section>
+
 </body>
 
 </html>

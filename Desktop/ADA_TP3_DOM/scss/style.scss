@@ -58,8 +58,7 @@ body {
                 margin: 0 0 0 10px;
             }
         }
-            
-    }
+          
         main{
             font-size: 13px;
             margin: 30px 20px;
@@ -96,7 +95,106 @@ body {
                 }
             }          
         }
+    }
+       
+    .modal{
+       font-family: 'Varela Round', sans-serif;
+       background-color: #fff;
+       flex-direction: column;
+       color: #566787;
+       display: flex;
+       width: 400px;
+       margin: 10px;
+       border-radius: 2px;
+       border: 1px solid rgba(0, 0, 0, 0.2);
+       box-shadow: 0 3px 9px rgba(0,0,0,.5);
+       
+        .modal-header{
+            display: flex;
+            justify-content: space-between;
+            padding: 20px 30px 20px 30px;
+            border-bottom: 1px solid #e5e5e5;
+        
+            h4{
+                display: flex;
+                align-items: center;
+                font-size: 18px;
+                font-weight: 500;
+                color: #566787;
+            }
+            i{
+                font-size: 16px;
+                color: #ccc;
+            }
+        }
+ 
+        .modal-form label{
+            display: flex;
+            flex-direction: column;
+            padding: 20px 30px 0 30px;
+            font-size: 13px;
+            
+            input{
+                padding: 7px 5px;
+                margin: 5px 0 0 0;
+                border: 1px solid #cccccc;
+                &:focus{
+                    outline: none;
+                }
+            }
+            textarea{
+                padding: 7px 5px;
+                margin: 5px 0 0 0;
+                border: 1px solid #cccccc;
+                height: 34px;
+                &:focus{
+                    outline: none;
+                }
+            }
 
+        }
+
+        .modal-footer{
+           background-color: #ECf0f1;
+           padding: 20px 40px;
+           display: flex;
+           justify-content: flex-end;
+           margin: 40px 0 0 0;
+           
+           button{
+                margin: 0 0 0 10px;
+                padding: 8px 14px;
+                width: 100px;
+                border-radius: 2px;
+                border: none;
+                cursor: pointer;
+                font-size: 14px;
+                &:focus{
+                    outline: none;
+                }
+           }
+           .btn-cancel{
+               border: 1px solid #ccc;
+               color: #333;
+               background-color: #fff;
+               &:hover{
+                color: #333;
+                background-color: #e6e6e6;
+                border-color: #adadad;
+               }
+
+           }
+           .btn-add{
+            background-color: #5cb85c;
+            border-color: #4cae4c;
+            color: #fff;
+            &:hover{
+                background-color: #449d44;
+                border-color: #398439;
+            }
+           }
+        }
+    }
 
 }
     
