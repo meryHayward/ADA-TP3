@@ -5,38 +5,66 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/style.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round"/>
     <title>ABM DE PERSONAS</title>
 </head>
 
 <body>
-    <section class="container">
-        <div class="table">
-            <header class="table-header">
-                <nav class="table-nav">
-                    <h2>Manage Employees</h2>
-                    <button type="button" class="table-btn"><i class="material-icons">&#xE147;</i><span>Add New
-                            Employee</span></button>
-                </nav>
+    <section class="container" style="display: none;">
+       
+            <header class="container-header">
+               <h2>Manage <span>Employees</span></h2>
+                <button type="button" class="container-btn"><i class="material-icons">&#xE147;</i><p>Add New Employee</p></button>
             </header>
-            <main class="main">
+            <main>
                 <form class="main-form"><input id="search" type="text" placeholder="Filter"></form>
                 <table class="main-table">
                     <thead>
-                        <tr class="table">
+                        <tr class="table-title">
                             <th> <span><input id="table-checkbox" type="checkbox"></span> </th>
                             <th>Name</th>
                             <th>Email</th>
                             <th>Address</th>
                             <th>Phone</th>
                             <th>Actions</th>
-                        </tr>
+                        </tr> 
                     </thead>
+                    <tbody id="table-body">
+                        <tr>
+                            <td></td>
+                        </tr>
+                    </tbody>
                 </table>
             </main>
-        </div>
     </section>
+     
+    <section class="modal">
+        <div class="modal-header">
+            <h4>Add Employee</h4>
+            <i class="material-icons">close</i>
+        </div>
+        <form class="modal-form" action="">
+            <label for="name">Name
+                <input type="text" id="name">
+            </label>
+            <label for="email">Email
+                <input type="text" id="email">
+            </label>
+            <label for="address">Address
+                <textarea type="text" id="address"> </textarea>
+            </label>
+            <label for="phone">Phone
+                <input type="text" id="phone">
+            </label>
+        </form>
+        <div class="modal-footer">
+            <button class="btn-cancel" type="button">Cancel</button>
+            <button class="btn-add">Add</button>
+        </div>
+        
+    </section>
+
 </body>
 
 </html>
