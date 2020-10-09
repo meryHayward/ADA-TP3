@@ -11,16 +11,28 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
+    position: relative;
     
+    .background-modal{
+        background: rgba(0,0,0,0.5);
+        z-index: 1;
+        width: 100vw;
+        height: 100vh;
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: none;
+        transition: all 5s linear;
 
+    }
     .container {
         background: #fff;
         margin: 25px 0 0 0;
         border-radius: 3px;
         width:83vw;
-
+        overflow: hidden;
         box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
-        
         .container-header{
         width: 100%;
         background: #435d7d;
@@ -54,6 +66,8 @@ body {
             border: none;
             outline: none;
             background-color: rgb(92,184,92);
+            cursor: pointer;
+            
             p{
                 margin: 0 0 0 10px;
             }
@@ -96,19 +110,22 @@ body {
             }          
         }
     }
-       
+    
     .modal{
-       font-family: 'Varela Round', sans-serif;
-       background-color: #fff;
-       flex-direction: column;
-       color: #566787;
-       display: flex;
-       width: 400px;
-       margin: 10px;
-       border-radius: 2px;
-       border: 1px solid rgba(0, 0, 0, 0.2);
-       box-shadow: 0 3px 9px rgba(0,0,0,.5);
-       
+        font-family: 'Varela Round', sans-serif;
+        background-color: #fff;
+        flex-direction: column;
+        color: #566787;
+        width: 400px;
+        margin: 25px 10px 10px 10px;
+        border-radius: 2px;
+        border: 1px solid rgba(0, 0, 0, 0.2);
+        box-shadow: 0 3px 9px rgba(0,0,0,.5);
+        position: fixed;
+        top: -1000px;
+        right: 50;
+        z-index: 2;
+        transition: all 1s;
         .modal-header{
             display: flex;
             justify-content: space-between;
@@ -123,8 +140,12 @@ body {
                 color: #566787;
             }
             i{
-                font-size: 16px;
+                font-size: 17px;
                 color: #ccc;
+                cursor: pointer;
+                &:hover{
+                    color: rgb(97, 97, 97) ;
+                }
             }
         }
  
