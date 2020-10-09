@@ -9,12 +9,25 @@ body {
   font-family: 'Varela Round', sans-serif;
   display: flex;
   justify-content: center;
-  align-items: center; }
+  align-items: center;
+  flex-direction: column;
+  position: relative; }
+  body .background-modal {
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: none;
+    transition: all 5s linear; }
   body .container {
     background: #fff;
     margin: 25px 0 0 0;
     border-radius: 3px;
     width: 83vw;
+    overflow: hidden;
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05); }
     body .container .container-header {
       width: 100%;
@@ -42,7 +55,8 @@ body {
       border-radius: 2px;
       border: none;
       outline: none;
-      background-color: #5cb85c; }
+      background-color: #5cb85c;
+      cursor: pointer; }
       body .container .container-btn p {
         margin: 0 0 0 10px; }
     body .container main {
@@ -78,12 +92,16 @@ body {
     background-color: #fff;
     flex-direction: column;
     color: #566787;
-    display: flex;
     width: 400px;
-    margin: 10px;
+    margin: 25px 10px 10px 10px;
     border-radius: 2px;
     border: 1px solid rgba(0, 0, 0, 0.2);
-    box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5); }
+    box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
+    position: fixed;
+    top: -1000px;
+    right: 50;
+    z-index: 2;
+    transition: all 1s; }
     body .modal .modal-header {
       display: flex;
       justify-content: space-between;
@@ -96,8 +114,11 @@ body {
         font-weight: 500;
         color: #566787; }
       body .modal .modal-header i {
-        font-size: 16px;
-        color: #ccc; }
+        font-size: 17px;
+        color: #ccc;
+        cursor: pointer; }
+        body .modal .modal-header i:hover {
+          color: #616161; }
     body .modal .modal-form label {
       display: flex;
       flex-direction: column;
