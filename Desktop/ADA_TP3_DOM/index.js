@@ -38,7 +38,7 @@ const getUsers = async () => {
 }
 
 const createTable = (users) => {
-    const tbody = document.getElementById("#table-body");
+    const tbody = document.querySelector("#table-body");
     users.forEach(user => {
         const row = document.createElement("tr");
         row.classList.add("table")
