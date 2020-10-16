@@ -23,22 +23,34 @@ const load = () => {
     ///// EMPEZAMOS CON TABLA//////
 
     getUsers();
-
 }
 
-const getUsers = async () => {
-    try {
-        const res = await axios.get(`https://5f7c70d600bd74001690ac5e.mockapi.io/users`)
-        const users = res.data;
-        console.log(res.data)
-        createTable(users);
-    } catch (err) {
-        console.error(err, `que pasa`);
-    }
+// const getUsers = async () => {
+//     try {
+//         const res = await axios.get(`https://5f7c70d600bd74001690ac5e.mockapi.io/users`)
+//         const users = res.data;
+//         console.log(res.data)
+//         createTable(users);
+//     } catch (err) {
+//         console.error(err, `que pasa`);
+//     }
+// }
+
+const getUsers = () => {
+    axios.get("https://5f7c70d600bd74001690ac5e.mockapi.io/users")
+        .then(res => {
+            const users = res.data;
+            // console.log(`no llega aca`, res.data)
+            createTable(users);
+            search(users);
+        })
+        .catch(err => alert("Hubo un error"));
 }
 
 const createTable = (users) => {
-    const tbody = document.getElementById("#table-body");
+    const tbody = document.querySelector("#table-body");
+    // console.log(tbody)
+
     users.forEach(user => {
         const row = document.createElement("tr");
         row.classList.add("table")
@@ -62,9 +74,9 @@ const createTable = (users) => {
         btnDelete.classList.add("btn");
 
         tdName.innerText = user.fullname;
-        console.log(`ver que onda`, user.fullname)
+        // console.log(`ver que onda`, user.fullname)
         tdEmail.innerText = user.email;
-        console.log(`ver que onda`, user.email)
+        // console.log(`ver que onda`, user.email)
         tdAddress.innerText = user.address;
         tdPhone.innerText = user.phone;
         btnEdit.innerText = "EDIT";
@@ -76,13 +88,49 @@ const createTable = (users) => {
         row.appendChild(tdEmail);
         row.appendChild(tdAddress);
         row.appendChild(tdPhone);
-        row.appendChild(tdActions);
         tdActions.appendChild(btnEdit);
         tdActions.appendChild(btnDelete);
+        row.appendChild(tdActions);
         tbody.appendChild(row);
-        console.log(tbody)
+
     })
 }
+
+const search = (users) => {
+    const inputFilter = document.querySelector("#search"); 
+
+    inputFilter.addEventListener('keyup', e => {
+        if(e.keyCode === 13){
+        const buscador = inputFilter.value.toLowerCase();
+        const resultados = users.filter(user => {
+            if (
+            user.fullname.toLowerCase().indexOf(buscador) > -1 ||
+            user.email.toLowerCase().indexOf(buscador) > -1
+         ) {
+             return true;
+         }
+         return false;
+         });
+         console.log('esto me esta dando', resultados)
+        }
+    })
+}
+
+    
+    //inputFilter = document.querySelector("#search").value.toLowerCase()
+    // inputFilter.addEventListener('keyup', (e) => {
+    //     console.log('pepito')
+    // })
+
+    // const resultados = datos.filter(item => {
+    //     if (
+    //         item.nombre.toLowerCase().indexOf(inputador) > -1 ||
+    //         String(item.nivel).indexOf(inputador) > -1
+    //     ) {
+    //         return true;
+    //     }
+    //     return false;
+    // });
 
 /* API */
 /* https://5f7c70d600bd74001690ac5e.mockapi.io/users */
