@@ -1,5 +1,6 @@
 const load = () => {
     const modal = document.querySelector('.modal');
+
     const backgroundModal = document.querySelector('.background-modal')
     const btnModalClose = document.querySelector('#btn-modal-close')
 
@@ -20,9 +21,12 @@ const load = () => {
         modal.style.right = "50";
     });
 
+
+
     ///// EMPEZAMOS CON TABLA//////
 
     getUsers();
+    editUsers(newUser);
 
 }
 
@@ -37,8 +41,40 @@ const getUsers = async () => {
     }
 }
 
+const editUsers = async (newUser) => {
+    try {
+        const res = await axios.get(`https://5f7c70d600bd74001690ac5e.mockapi.io/users/${newUser.id}`, newUser)
+        const users = res.data;
+        console.log(res.data)
+        createTable(users);
+    } catch (err) {
+        console.log(err, `edito?`);
+    }
+}
+
+const submitEdit = (user) => {
+    const newName = document.querySelector("#name2").value;
+    console.log(`ver si me toma el nvo valor del input`, newName);
+    const newEmail = document.querySelector("#email2").value;
+    console.log(`ver si me toma el nvo valor del input`, newEmail);
+    const newAddress = document.querySelector("#address2").value;
+    console.log(`ver si me toma el nvo valor del input`, newAddress);
+    const newPhone = document.querySelector("#phone2").value;
+
+    const newUser = {
+        ...user,
+        phone: newPhone,
+        email: newEmail,
+        address: newAddress,
+        name: newName,
+        /*         id: id */
+    }
+}
+
+
 const createTable = (users) => {
     const tbody = document.querySelector("#table-body");
+    let id = 01;
     users.forEach(user => {
         const row = document.createElement("tr");
         row.classList.add("table")
@@ -61,10 +97,12 @@ const createTable = (users) => {
         const btnDelete = document.createElement("button");
         btnDelete.classList.add("btn");
 
+        row.innerText = id++;
+        console.log("ver si funciona el id", row.innerText)
         tdName.innerText = user.fullname;
-        console.log(`ver que onda`, user.fullname)
+        /* console.log(`ver que onda`, user.fullname) */
         tdEmail.innerText = user.email;
-        console.log(`ver que onda`, user.email)
+        /*  console.log(`ver que onda`, user.email) */
         tdAddress.innerText = user.address;
         tdPhone.innerText = user.phone;
         btnEdit.innerText = "EDIT";
@@ -81,38 +119,32 @@ const createTable = (users) => {
         tdActions.appendChild(btnDelete);
         tbody.appendChild(row);
         console.log(tbody)
-    })
-}
 
-/* API */
-/* https://5f7c70d600bd74001690ac5e.mockapi.io/users */
-
-//// Ejemplo del filter 
-/* const onload = () => {
-    const datos = [
-        { nombre: "Goku", nivel: 9999 },
-        { nombre: "Gohan", nivel: 150000 },
-        { nombre: "Vegeta", nivel: 9955 }
-    ];
-    const buscador = document.querySelector("#buscador");
-    buscador.addEventListener("click", () => {
-        const inputador = document.querySelector("#inputador").value.toLowerCase();
-        if (inputador.length < 3) return;
-        const resultados = datos.filter(item => {
-            if (
-                item.nombre.toLowerCase().indexOf(inputador) > -1 ||
-                String(item.nivel).indexOf(inputador) > -1
-            ) {
-                return true;
-            }
-            return false;
-        });
-        const resultador = document.querySelector("#resultador");
-        let text = ``;
-        for (let res of resultados) {
-            text += `${res.nombre} - nivel ${res.nivel}
-            `;
+        const editar = user => {
+            const modal = document.querySelector('#edit-modal');
+            backgroundModal.style.display = "block";
+            modal.style.top = "0";
+            modal.style.right = "50";
+            document.querySelector("#name2").value = user.fullname;
+            console.log(`ver si me toma el value`, user.fullname)
+            document.querySelector("#email2").value = user.email;
+            document.querySelector("#address2").value = user.address;
+            document.querySelector("#phone2").value = user.phone;
+            document.querySelector(".btn-edit").addEventListener('click', submitEdit(user));
         }
-        resultador.value = text;
+        btnEdit.addEventListener("click", () => editar(user));
+    })
+
+    const modal2 = document.querySelector('#edit-modal');
+    const backgroundModal = document.querySelector('.background-modal')
+    document.querySelector('#btn-modal-close2').addEventListener('click', () => {
+        backgroundModal.style.display = "none";
+        modal2.style.top = "-1000px";
+        modal2.style.right = "50";
     });
-} */
+    document.querySelector('#btn-cancel2').addEventListener('click', () => {
+        backgroundModal.style.display = "none";
+        modal2.style.top = "-1000px";
+        modal2.style.right = "50";
+    });
+}

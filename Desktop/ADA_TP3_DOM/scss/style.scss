@@ -14,7 +14,7 @@ body {
     flex-direction: column;
     position: relative;
     
-    .background-modal{
+    .background-modal, .background-modal2{
         background: rgba(0,0,0,0.5);
         z-index: 1;
         width: 100vw;
@@ -111,7 +111,7 @@ body {
         }
     }
     
-    .modal{
+    .modal, #edit-modal{
         font-family: 'Varela Round', sans-serif;
         background-color: #fff;
         flex-direction: column;
