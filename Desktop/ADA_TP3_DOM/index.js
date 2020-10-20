@@ -23,6 +23,8 @@ const load = () => {
 
 
 
+
+
     ///// EMPEZAMOS CON TABLA//////
 
     getUsers();
@@ -41,9 +43,9 @@ const getUsers = async () => {
     }
 }
 
-const editUsers = async (newUser) => {
+const editUsers = async (newUser, user) => {
     try {
-        const res = await axios.get(`https://5f7c70d600bd74001690ac5e.mockapi.io/users/${newUser.id}`, newUser)
+        const res = await axios.put(`https://5f7c70d600bd74001690ac5e.mockapi.io/users/${user.id}`, newUser)
         const users = res.data;
         console.log(res.data)
         createTable(users);
@@ -51,26 +53,6 @@ const editUsers = async (newUser) => {
         console.log(err, `edito?`);
     }
 }
-
-const submitEdit = (user) => {
-    const newName = document.querySelector("#name2").value;
-    console.log(`ver si me toma el nvo valor del input`, newName);
-    const newEmail = document.querySelector("#email2").value;
-    console.log(`ver si me toma el nvo valor del input`, newEmail);
-    const newAddress = document.querySelector("#address2").value;
-    console.log(`ver si me toma el nvo valor del input`, newAddress);
-    const newPhone = document.querySelector("#phone2").value;
-
-    const newUser = {
-        ...user,
-        phone: newPhone,
-        email: newEmail,
-        address: newAddress,
-        name: newName,
-        /*         id: id */
-    }
-}
-
 
 const createTable = (users) => {
     const tbody = document.querySelector("#table-body");
@@ -126,11 +108,28 @@ const createTable = (users) => {
             modal.style.top = "0";
             modal.style.right = "50";
             document.querySelector("#name2").value = user.fullname;
-            console.log(`ver si me toma el value`, user.fullname)
             document.querySelector("#email2").value = user.email;
             document.querySelector("#address2").value = user.address;
             document.querySelector("#phone2").value = user.phone;
-            document.querySelector(".btn-edit").addEventListener('click', submitEdit(user));
+            document.querySelector(".btn-edit").addEventListener('click', () => {
+                const newName = document.querySelector("#name2").value;
+                const newEmail = document.querySelector("#email2").value;
+                const newAddress = document.querySelector("#address2").value;
+                const newPhone = document.querySelector("#phone2").value;
+                console.log(`NVO VALUE`, newName, newEmail, newPhone, newAddress)
+                const newUser = {
+                    ...user,
+                    phone: newPhone,
+                    email: newEmail,
+                    address: newAddress,
+                    fullname: newName,
+                    id: id
+                }
+                editUsers(newUser, user);
+                backgroundModal.style.display = "none";
+                modal2.style.top = "-1000px";
+                modal2.style.right = "50";
+            });
         }
         btnEdit.addEventListener("click", () => editar(user));
     })
@@ -147,4 +146,5 @@ const createTable = (users) => {
         modal2.style.top = "-1000px";
         modal2.style.right = "50";
     });
+
 }
