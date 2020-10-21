@@ -36,20 +36,24 @@ const load = () => {
 //     }
 // }
 
-const getUsers = () => {
-    axios.get("https://5f7c70d600bd74001690ac5e.mockapi.io/users")
+
+let users;
+
+const getUsers = async () => {
+    await axios.get("https://5f7c70d600bd74001690ac5e.mockapi.io/users")
         .then(res => {
-            const users = res.data;
-            // console.log(`no llega aca`, res.data)
+            users = res.data;
             createTable(users);
-            search(users);
+            search()
         })
         .catch(err => alert("Hubo un error"));
 }
 
+// console.log('esto es apiResp', apiResp)
+
 const createTable = (users) => {
+
     const tbody = document.querySelector("#table-body");
-    // console.log(tbody)
 
     users.forEach(user => {
         const row = document.createElement("tr");
@@ -96,27 +100,105 @@ const createTable = (users) => {
     })
 }
 
-const search = (users) => {
-    const inputFilter = document.querySelector("#search"); 
 
-    inputFilter.addEventListener('keyup', e => {
-        if(e.keyCode === 13){
+const search =  () => {
+     getUsers();
+    const inputFilter = document.querySelector("#search"); 
+    
+    inputFilter.addEventListener("keyup", e => {
         const buscador = inputFilter.value.toLowerCase();
+        console.log('resultado del buscador', buscador) //funciona buscador
         const resultados = users.filter(user => {
-            if (
-            user.fullname.toLowerCase().indexOf(buscador) > -1 ||
-            user.email.toLowerCase().indexOf(buscador) > -1
-         ) {
-             return true;
+            if(
+            user.fullname.toLowerCase().includes(buscador) 
+            // ||
+            // user.email.toLowerCase().includes(buscador)
+         ){
+            return true;
+         }else {
+            return false;
          }
-         return false;
          });
-         console.log('esto me esta dando', resultados)
-        }
+         console.log(resultados);
+
     })
 }
 
-    
+//Ejemplo Codepen:
+
+// const search_input = document.getElementById('search');
+// const results = document.getElementById('results');
+
+// let search_term = '';
+// let countries;
+
+// const fetchCountries = async () => {
+// 	countries = await fetch('https://restcountries.eu/rest/v2/all?fields=name;population;flag').then(
+// 		res => res.json()
+// 	);
+// }
+
+// const showCountries = async () => {
+// 	// clearHTML
+// 	results.innerHTML = '';
+	
+// 	// getting the data
+// 	await fetchCountries();
+	
+// 	// creating the structure
+// 	const ul = document.createElement("ul");
+// 	ul.classList.add('countries');
+	
+// 	countries.filter(
+// 		country => country.name.toLowerCase().includes(search_term.toLowerCase())
+// 	).forEach(country => {
+// 		const li = document.createElement('li');
+// 		const country_flag = document.createElement('img');
+// 		const country_name = document.createElement('h3');
+// 		const country_info = document.createElement('div');
+// 		const country_population = document.createElement('h2');
+// 		const country_popupation_text = document.createElement('h5');
+		
+// 		li.classList.add('country-item');
+// 		country_info.classList.add('country-info');
+		
+// 		country_flag.src = country.flag;
+// 		country_flag.classList.add('country-flag');
+		
+// 		country_name.innerText = country.name;
+// 		country_name.classList.add('country-name');
+		
+// 		country_population.innerText = numberWithCommas(country.population);
+// 		country_population.classList.add('country-population');
+// 		country_popupation_text.innerText = 'Population';
+// 		country_popupation_text.classList.add('country-population-text');
+		
+// 		country_info.appendChild(country_population);
+// 		country_info.appendChild(country_popupation_text);
+		
+// 		li.appendChild(country_flag);
+// 		li.appendChild(country_name);
+// 		li.appendChild(country_info);
+// 		ul.appendChild(li);
+// 	})
+// 	results.appendChild(ul);
+// }
+
+// // display initial countries
+// showCountries();
+
+// search_input.addEventListener('input', (e) => {
+// 	search_term = e.target.value;
+// 	// re-display countries again based on the new search_term
+// 	showCountries();
+// });
+
+
+
+
+
+    //Ejemplo de Fede
+
     //inputFilter = document.querySelector("#search").value.toLowerCase()
     // inputFilter.addEventListener('keyup', (e) => {
     //     console.log('pepito')
