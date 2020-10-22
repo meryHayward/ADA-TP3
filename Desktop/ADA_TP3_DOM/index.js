@@ -14,44 +14,44 @@ const load = () => {
     const backgroundModal = document.querySelector('.background-modal')
     const btnModalClose = document.querySelector('#btn-modal-close')
 
-    document.getElementById('btn-modal').addEventListener('click', () => {
+    document.querySelector('#btn-modal').addEventListener('click', () => {
         backgroundModal.style.display = "block";
         modal.style.top = "0";
         modal.style.right = "50";
     });
 
-    document.getElementById('btn-modal-close').addEventListener('click', () => {
+    document.querySelector('#btn-modal-close').addEventListener('click', () => {
         backgroundModal.style.display = "none";
         modal.style.top = "-1000px";
         modal.style.right = "50";
     });
-    document.getElementById('btn-cancel').addEventListener('click', () => {
+    document.querySelector('#btn-cancel').addEventListener('click', () => {
         backgroundModal.style.display = "none";
         modal.style.top = "-1000px";
         modal.style.right = "50";
     });
 
-    document.getElementById('btn-add').addEventListener('click', () => {
+    document.querySelector('#btn-add').addEventListener('click', () => {
         let isValid = true;
         const newName = document.querySelector("#name").value;
         // si newName.length > 50 alert "che la cagaste, es muy largo tu name"
         if (!newName || newName.length > 50) {
-            alert("Name no valido");
+            alert("Name: Not valid.");
             isValid = false;
         }
         const newEmail = document.querySelector("#email").value;
         if (!validateEmail(newEmail)) {
-            alert("Email no valido");
+            alert("Email: Not valid.");
             isValid = false;
         }
         const newAddress = document.querySelector("#address").value;
         if (!newAddress || newAddress.length > 60) {
-            alert("Address no valido");
+            alert("Address: Not valid.");
             isValid = false;
         }
         const newPhone = document.querySelector("#phone").value;
         if (!validatePhone(newPhone)) {
-            alert("Phone no valido");
+            alert("Phone: Not valid.");
             isValid = false;
         }
         const newUser = {
@@ -61,13 +61,13 @@ const load = () => {
             fullname: newName,
         }
         if (isValid) {
-            createUser(newUser); 
+            createUser(newUser);
             backgroundModal.style.display = "none";
             modal.style.top = "-1000px";
             modal.style.right = "50";
         }
     });
-    
+
     ///// EMPEZAMOS CON TABLA//////
 
     getUsers();
@@ -85,9 +85,9 @@ const getUsers = async () => {
     }
 }
 
-const editUsers = async (newUser, id) => { // newUser se podria llamar editedUser y pasar solo id del usuario a modificar
+const editUsers = async (editUser, id) => { // newUser se podria llamar editedUser y pasar solo id del usuario a modificar
     try {
-        const res = await axios.put(`https://5f7c70d600bd74001690ac5e.mockapi.io/users/${id}`, newUser)
+        const res = await axios.put(`https://5f7c70d600bd74001690ac5e.mockapi.io/users/${id}`, editUser)
         const users = getUsers(); // aca lo que necesitamos es llamar a los usuarios nuevamente (a todos, no solo al que edite)
         console.log(res.data)
         createTable(users);
@@ -102,7 +102,7 @@ const createUser = async (newUser) => {
         const users = getUsers();
         createTable(users);
     } catch (err) {
-        console.log(err); 
+        console.log(err);
     }
 }
 
@@ -117,6 +117,7 @@ const createTable = (users) => {
         tdCheck.classList.add("check");
         const check = document.createElement("input");
         check.type = "checkbox";
+        check.id = "checkBoxId"
         const tdName = document.createElement("td");
         tdName.classList.add("table-content");
         const tdEmail = document.createElement("td");
@@ -132,7 +133,6 @@ const createTable = (users) => {
         const btnDelete = document.createElement("button");
         btnDelete.classList.add("btn");
 
-        row.innerText = user.id; // usar el id del usuario!
         console.log("ver si funciona el id", row.innerText)
         tdName.innerText = user.fullname;
         /* console.log(`ver que onda`, user.fullname) */
@@ -144,7 +144,7 @@ const createTable = (users) => {
         btnDelete.innerText = "DELETE";
 
         row.appendChild(tdCheck);
-        check.appendChild(tdCheck);
+        tdCheck.appendChild(check);
         row.appendChild(tdName);
         row.appendChild(tdEmail);
         row.appendChild(tdAddress);
@@ -155,7 +155,7 @@ const createTable = (users) => {
         tbody.appendChild(row);
         console.log(tbody)
 
-        const editar = user => {
+        const edit = user => {
             const modal = document.querySelector('#edit-modal');
             backgroundModal.style.display = "block";
             modal.style.top = "0";
@@ -165,26 +165,37 @@ const createTable = (users) => {
             document.querySelector("#address2").value = user.address;
             document.querySelector("#phone2").value = user.phone;
             document.querySelector(".btn-edit").addEventListener('click', () => {
-                const newName = document.querySelector("#name2").value;
-                const newEmail = document.querySelector("#email2").value;
-                const newAddress = document.querySelector("#address2").value;
-                const newPhone = document.querySelector("#phone2").value;
-                console.log(`NVO VALUE`, newName, newEmail, newPhone, newAddress)
-                const newUser = {
+                const editName = document.querySelector("#name2").value;
+                const editEmail = document.querySelector("#email2").value;
+                const editAddress = document.querySelector("#address2").value;
+                const editPhone = document.querySelector("#phone2").value;
+
+                const editUser = {
                     ...user,
-                    phone: newPhone,
-                    email: newEmail,
-                    address: newAddress,
-                    fullname: newName,
-                    //id: id no es necesario porque ya viene con el spread operator 
+                    phone: editPhone,
+                    email: editEmail,
+                    address: editAddress,
+                    fullname: editName,
                 }
-                editUsers(newUser, user.id);
+
+                editUsers(editUser, user.id);
                 backgroundModal.style.display = "none";
                 modal2.style.top = "-1000px";
                 modal2.style.right = "50";
             });
         }
-        btnEdit.addEventListener("click", () => editar(user));
+        btnEdit.addEventListener("click", () => edit(user));
+
+        const checkAll = () => {
+            const checks = document.querySelectorAll("#checkBoxId");
+            console.log(`ver que muestra`, checks, checks.checked)
+            checks.forEach(check => (check.checked))
+        }
+
+        document.querySelector("#table-checkbox").addEventListener("click", () => {
+            checkAll();
+        })
+
     })
 
     const modal2 = document.querySelector('#edit-modal');
