@@ -1,3 +1,13 @@
+const validateEmail = (email) => {
+    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+}
+
+const validatePhone = (phone) => {
+    const re = /^[+]*[(]{0,1}[0-9]{1,3}[)]{0,1}[-\s\./0-9]*$/g
+    return re.test(String(phone).toLowerCase());
+}
+
 const load = () => {
     const modal = document.querySelector('.modal');
 
@@ -21,20 +31,52 @@ const load = () => {
         modal.style.right = "50";
     });
 
-
-
-
-
+    document.getElementById('btn-add').addEventListener('click', () => {
+        let isValid = true;
+        const newName = document.querySelector("#name").value;
+        // si newName.length > 50 alert "che la cagaste, es muy largo tu name"
+        if (!newName || newName.length > 50) {
+            alert("Name no valido");
+            isValid = false;
+        }
+        const newEmail = document.querySelector("#email").value;
+        if (!validateEmail(newEmail)) {
+            alert("Email no valido");
+            isValid = false;
+        }
+        const newAddress = document.querySelector("#address").value;
+        if (!newAddress || newAddress.length > 60) {
+            alert("Address no valido");
+            isValid = false;
+        }
+        const newPhone = document.querySelector("#phone").value;
+        if (!validatePhone(newPhone)) {
+            alert("Phone no valido");
+            isValid = false;
+        }
+        const newUser = {
+            phone: newPhone,
+            email: newEmail,
+            address: newAddress,
+            fullname: newName,
+        }
+        if (isValid) {
+            createUser(newUser); 
+            backgroundModal.style.display = "none";
+            modal.style.top = "-1000px";
+            modal.style.right = "50";
+        }
+    });
+    
     ///// EMPEZAMOS CON TABLA//////
 
     getUsers();
-    editUsers(newUser);
-
+    //editUsers(newUser); no hace falta llamar a edit user cuando cargamos la pagina
 }
 
 const getUsers = async () => {
     try {
-        const res = await axios.get(`https://5f7c70d600bd74001690ac5e.mockapi.io/users`)
+        const res = await axios.get(`https://5f7c70d600bd74001690ac5e.mockapi.io/users`);
         const users = res.data;
         console.log(res.data)
         createTable(users);
@@ -43,10 +85,10 @@ const getUsers = async () => {
     }
 }
 
-const editUsers = async (newUser, user) => {
+const editUsers = async (newUser, id) => { // newUser se podria llamar editedUser y pasar solo id del usuario a modificar
     try {
-        const res = await axios.put(`https://5f7c70d600bd74001690ac5e.mockapi.io/users/${user.id}`, newUser)
-        const users = res.data;
+        const res = await axios.put(`https://5f7c70d600bd74001690ac5e.mockapi.io/users/${id}`, newUser)
+        const users = getUsers(); // aca lo que necesitamos es llamar a los usuarios nuevamente (a todos, no solo al que edite)
         console.log(res.data)
         createTable(users);
     } catch (err) {
@@ -54,9 +96,20 @@ const editUsers = async (newUser, user) => {
     }
 }
 
+const createUser = async (newUser) => {
+    try {
+        const res = await axios.post(`https://5f7c70d600bd74001690ac5e.mockapi.io/users`, newUser);
+        const users = getUsers();
+        createTable(users);
+    } catch (err) {
+        console.log(err); 
+    }
+}
+
 const createTable = (users) => {
     const tbody = document.querySelector("#table-body");
-    let id = 01;
+    tbody.innerHTML = ''; // para que cada vez que se llame a createTable el tbody este vacio y evitar que se dupliquen los datos
+    // let id = 01; no es necesario porque la api ya me trae el id
     users.forEach(user => {
         const row = document.createElement("tr");
         row.classList.add("table")
@@ -79,7 +132,7 @@ const createTable = (users) => {
         const btnDelete = document.createElement("button");
         btnDelete.classList.add("btn");
 
-        row.innerText = id++;
+        row.innerText = user.id; // usar el id del usuario!
         console.log("ver si funciona el id", row.innerText)
         tdName.innerText = user.fullname;
         /* console.log(`ver que onda`, user.fullname) */
@@ -123,9 +176,9 @@ const createTable = (users) => {
                     email: newEmail,
                     address: newAddress,
                     fullname: newName,
-                    id: id
+                    //id: id no es necesario porque ya viene con el spread operator 
                 }
-                editUsers(newUser, user);
+                editUsers(newUser, user.id);
                 backgroundModal.style.display = "none";
                 modal2.style.top = "-1000px";
                 modal2.style.right = "50";
