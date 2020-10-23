@@ -8,6 +8,11 @@ const validatePhone = (phone) => {
     return re.test(String(phone).toLowerCase());
 }
 
+const checkAll = () => {
+    const checks = document.querySelectorAll("#checkBoxId");
+    checks.forEach(check => check.checked = !check.checked);
+}
+
 const load = () => {
     const modal = document.querySelector('.modal');
 
@@ -25,6 +30,7 @@ const load = () => {
         modal.style.top = "-1000px";
         modal.style.right = "50";
     });
+    
     document.querySelector('#btn-cancel').addEventListener('click', () => {
         backgroundModal.style.display = "none";
         modal.style.top = "-1000px";
@@ -66,6 +72,10 @@ const load = () => {
             modal.style.top = "-1000px";
             modal.style.right = "50";
         }
+    });
+
+    document.querySelector("#table-checkbox").addEventListener("click", () => {
+        checkAll();
     });
 
     ///// EMPEZAMOS CON TABLA//////
@@ -117,7 +127,8 @@ const createTable = (users) => {
         tdCheck.classList.add("check");
         const check = document.createElement("input");
         check.type = "checkbox";
-        check.id = "checkBoxId"
+        check.id = "checkBoxId";
+        check.checked = false;
         const tdName = document.createElement("td");
         tdName.classList.add("table-content");
         const tdEmail = document.createElement("td");
@@ -185,18 +196,7 @@ const createTable = (users) => {
             });
         }
         btnEdit.addEventListener("click", () => edit(user));
-
-        const checkAll = () => {
-            const checks = document.querySelectorAll("#checkBoxId");
-            console.log(`ver que muestra`, checks, checks.checked)
-            checks.forEach(check => (check.checked))
-        }
-
-        document.querySelector("#table-checkbox").addEventListener("click", () => {
-            checkAll();
-        })
-
-    })
+    });
 
     const modal2 = document.querySelector('#edit-modal');
     const backgroundModal = document.querySelector('.background-modal')
