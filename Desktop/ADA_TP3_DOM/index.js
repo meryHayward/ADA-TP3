@@ -23,18 +23,8 @@ const load = () => {
     ///// EMPEZAMOS CON TABLA//////
 
     getUsers();
+    search();
 }
-
-// const getUsers = async () => {
-//     try {
-//         const res = await axios.get(`https://5f7c70d600bd74001690ac5e.mockapi.io/users`)
-//         const users = res.data;
-//         console.log(res.data)
-//         createTable(users);
-//     } catch (err) {
-//         console.error(err, `que pasa`);
-//     }
-// }
 
 
 let users;
@@ -44,12 +34,9 @@ const getUsers = async () => {
         .then(res => {
             users = res.data;
             createTable(users);
-            search()
         })
         .catch(err => alert("Hubo un error"));
 }
-
-// console.log('esto es apiResp', apiResp)
 
 const createTable = (users) => {
 
@@ -101,28 +88,30 @@ const createTable = (users) => {
 }
 
 
-const search =  () => {
-     getUsers();
+const search = async () => {
+    await getUsers();
     const inputFilter = document.querySelector("#search"); 
     
     inputFilter.addEventListener("keyup", e => {
         const buscador = inputFilter.value.toLowerCase();
-        console.log('resultado del buscador', buscador) //funciona buscador
+        console.log('resultado del buscador', buscador) 
+
         const resultados = users.filter(user => {
             if(
             user.fullname.toLowerCase().includes(buscador) 
-            // ||
-            // user.email.toLowerCase().includes(buscador)
+            ||
+            user.email.toLowerCase().includes(buscador)
          ){
             return true;
          }else {
             return false;
          }
-         });
-         console.log(resultados);
-
+        });
+        console.log(resultados);
     })
 }
+
+
 
 //Ejemplo Codepen:
 
