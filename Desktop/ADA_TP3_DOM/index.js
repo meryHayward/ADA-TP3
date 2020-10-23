@@ -26,14 +26,13 @@ const load = () => {
     search();
 }
 
-
 let users;
 
 const getUsers = async () => {
     await axios.get("https://5f7c70d600bd74001690ac5e.mockapi.io/users")
         .then(res => {
             users = res.data;
-            createTable(users);
+            // createTable(users);
         })
         .catch(err => alert("Hubo un error"));
 }
@@ -87,28 +86,33 @@ const createTable = (users) => {
     })
 }
 
+// let userFilter;
 
-const search = async () => {
-    await getUsers();
+const search = () => {
     const inputFilter = document.querySelector("#search"); 
     
     inputFilter.addEventListener("keyup", e => {
         const buscador = inputFilter.value.toLowerCase();
-        console.log('resultado del buscador', buscador) 
+        console.log('resultado del buscador', buscador);
+        if (users.length < 3) return;
 
         const resultados = users.filter(user => {
             if(
             user.fullname.toLowerCase().includes(buscador) 
             ||
-            user.email.toLowerCase().includes(buscador)
+            user.email.toLowerCase().includes(buscador) 
          ){
             return true;
-         }else {
-            return false;
          }
         });
-        console.log(resultados);
+        // resultados.forEach(userList => {
+        //    userList
+        // })
+        console.log('resultados', resultados)
+        createTable(resultados)
     })
+    
+    // createTable(userFilter)
 }
 
 
