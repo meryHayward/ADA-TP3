@@ -88,7 +88,7 @@ const getUsers = async () => {
     try {
         const res = await axios.get(`https://5f7c70d600bd74001690ac5e.mockapi.io/users`);
         const users = res.data;
-        console.log(res.data)
+        // console.log(res.data)
         createTable(users);
     } catch (err) {
         console.error(err, `que pasa`);
@@ -98,9 +98,8 @@ const getUsers = async () => {
 const editUsers = async (editUser, id) => { // newUser se podria llamar editedUser y pasar solo id del usuario a modificar
     try {
         const res = await axios.put(`https://5f7c70d600bd74001690ac5e.mockapi.io/users/${id}`, editUser)
-        const users = getUsers(); // aca lo que necesitamos es llamar a los usuarios nuevamente (a todos, no solo al que edite)
-        console.log(res.data)
-        createTable(users);
+        getUsers(); // aca lo que necesitamos es llamar a los usuarios nuevamente (a todos, no solo al que edite)
+        // console.log(res.data)
     } catch (err) {
         console.log(err, `edito?`);
     }
@@ -109,8 +108,7 @@ const editUsers = async (editUser, id) => { // newUser se podria llamar editedUs
 const createUser = async (newUser) => {
     try {
         const res = await axios.post(`https://5f7c70d600bd74001690ac5e.mockapi.io/users`, newUser);
-        const users = getUsers();
-        createTable(users);
+        getUsers();
     } catch (err) {
         console.log(err);
     }
@@ -144,7 +142,7 @@ const createTable = (users) => {
         const btnDelete = document.createElement("button");
         btnDelete.classList.add("delete");
 
-        console.log("ver si funciona el id", row.innerText)
+        // console.log("ver si funciona el id", row.innerText)
         tdName.innerText = user.fullname;
         /* console.log(`ver que onda`, user.fullname) */
         tdEmail.innerText = user.email;
@@ -164,7 +162,7 @@ const createTable = (users) => {
         tdActions.appendChild(btnEdit);
         tdActions.appendChild(btnDelete);
         tbody.appendChild(row);
-        console.log(tbody)
+        // console.log(tbody)
 
         const edit = user => {
             const modal = document.querySelector('#edit-modal');
