@@ -214,8 +214,70 @@ body {
                 border-color: #398439;
             }
            }
+            .btn-edit{
+            background-color: #5cb85c;
+            border-color: #4cae4c;
+            color: #fff;
+            &:hover{
+                background-color: #449d44;
+                border-color: #398439;
+            }
+           }
+            .btn-delete{
+            background-color: #c13411;
+            border-color: #c13411;
+            color: #fff;
+            &:hover{
+                background-color: #831311;
+                border-color: #831311;
+            }
+           }
         }
     }
 
+    .table{
+        border-bottom: 0.5px solid rgb(228, 228, 228);
+        height: 35px;
+td{
+.check{
+    margin-left: 20px;
 }
+}
+   
+
+             .edit{
+            background-color: #5cb85c;
+            border-color: #4cae4c;
+            color: #fff;
+            border: none;
+            padding: 4px;
+            border-radius: 2px;
+            margin-right: 10px;
+            cursor: pointer;
+            
+            &:hover{
+                background-color: #449d44;
+                border-color: #398439;
+            }
+           }
+            .delete{
+            border-radius: 2px;
+            background-color: #c13411;
+            border-color: #c13411;
+            color: #fff;
+            border: none;
+            padding: 4px;
+            cursor: pointer;
+            &:hover{
+                background-color: #831311;
+                border-color: #831311;
+            }
+           }
+
+        
+       
+}
+
+    }
+     
     

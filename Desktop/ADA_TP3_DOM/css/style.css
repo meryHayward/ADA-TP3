@@ -12,7 +12,7 @@ body {
   align-items: center;
   flex-direction: column;
   position: relative; }
-  body .background-modal {
+  body .background-modal, body .background-modal2 {
     background: rgba(0, 0, 0, 0.5);
     z-index: 1;
     width: 100vw;
@@ -87,7 +87,7 @@ body {
           padding: 0 0 20px 0; }
         body .container main .main-table #table-body {
           border-top: 2px solid #e0e0e0; }
-  body .modal {
+  body .modal, body #edit-modal {
     font-family: 'Varela Round', sans-serif;
     background-color: #fff;
     flex-direction: column;
@@ -102,48 +102,48 @@ body {
     right: 50;
     z-index: 2;
     transition: all 1s; }
-    body .modal .modal-header {
+    body .modal .modal-header, body #edit-modal .modal-header {
       display: flex;
       justify-content: space-between;
       padding: 20px 30px 20px 30px;
       border-bottom: 1px solid #e5e5e5; }
-      body .modal .modal-header h4 {
+      body .modal .modal-header h4, body #edit-modal .modal-header h4 {
         display: flex;
         align-items: center;
         font-size: 18px;
         font-weight: 500;
         color: #566787; }
-      body .modal .modal-header i {
+      body .modal .modal-header i, body #edit-modal .modal-header i {
         font-size: 17px;
         color: #ccc;
         cursor: pointer; }
-        body .modal .modal-header i:hover {
+        body .modal .modal-header i:hover, body #edit-modal .modal-header i:hover {
           color: #616161; }
-    body .modal .modal-form label {
+    body .modal .modal-form label, body #edit-modal .modal-form label {
       display: flex;
       flex-direction: column;
       padding: 20px 30px 0 30px;
       font-size: 13px; }
-      body .modal .modal-form label input {
+      body .modal .modal-form label input, body #edit-modal .modal-form label input {
         padding: 7px 5px;
         margin: 5px 0 0 0;
         border: 1px solid #cccccc; }
-        body .modal .modal-form label input:focus {
+        body .modal .modal-form label input:focus, body #edit-modal .modal-form label input:focus {
           outline: none; }
-      body .modal .modal-form label textarea {
+      body .modal .modal-form label textarea, body #edit-modal .modal-form label textarea {
         padding: 7px 5px;
         margin: 5px 0 0 0;
         border: 1px solid #cccccc;
         height: 34px; }
-        body .modal .modal-form label textarea:focus {
+        body .modal .modal-form label textarea:focus, body #edit-modal .modal-form label textarea:focus {
           outline: none; }
-    body .modal .modal-footer {
+    body .modal .modal-footer, body #edit-modal .modal-footer {
       background-color: #ECf0f1;
       padding: 20px 40px;
       display: flex;
       justify-content: flex-end;
       margin: 40px 0 0 0; }
-      body .modal .modal-footer button {
+      body .modal .modal-footer button, body #edit-modal .modal-footer button {
         margin: 0 0 0 10px;
         padding: 8px 14px;
         width: 100px;
@@ -151,20 +151,62 @@ body {
         border: none;
         cursor: pointer;
         font-size: 14px; }
-        body .modal .modal-footer button:focus {
+        body .modal .modal-footer button:focus, body #edit-modal .modal-footer button:focus {
           outline: none; }
-      body .modal .modal-footer .btn-cancel {
+      body .modal .modal-footer .btn-cancel, body #edit-modal .modal-footer .btn-cancel {
         border: 1px solid #ccc;
         color: #333;
         background-color: #fff; }
-        body .modal .modal-footer .btn-cancel:hover {
+        body .modal .modal-footer .btn-cancel:hover, body #edit-modal .modal-footer .btn-cancel:hover {
           color: #333;
           background-color: #e6e6e6;
           border-color: #adadad; }
-      body .modal .modal-footer .btn-add {
+      body .modal .modal-footer .btn-add, body #edit-modal .modal-footer .btn-add {
         background-color: #5cb85c;
         border-color: #4cae4c;
         color: #fff; }
-        body .modal .modal-footer .btn-add:hover {
+        body .modal .modal-footer .btn-add:hover, body #edit-modal .modal-footer .btn-add:hover {
           background-color: #449d44;
           border-color: #398439; }
+      body .modal .modal-footer .btn-edit, body #edit-modal .modal-footer .btn-edit {
+        background-color: #5cb85c;
+        border-color: #4cae4c;
+        color: #fff; }
+        body .modal .modal-footer .btn-edit:hover, body #edit-modal .modal-footer .btn-edit:hover {
+          background-color: #449d44;
+          border-color: #398439; }
+      body .modal .modal-footer .btn-delete, body #edit-modal .modal-footer .btn-delete {
+        background-color: #c13411;
+        border-color: #c13411;
+        color: #fff; }
+        body .modal .modal-footer .btn-delete:hover, body #edit-modal .modal-footer .btn-delete:hover {
+          background-color: #831311;
+          border-color: #831311; }
+  body .table {
+    border-bottom: 0.5px solid #e4e4e4;
+    height: 35px; }
+    body .table td .check {
+      margin-left: 20px; }
+    body .table .edit {
+      background-color: #5cb85c;
+      border-color: #4cae4c;
+      color: #fff;
+      border: none;
+      padding: 4px;
+      border-radius: 2px;
+      margin-right: 10px;
+      cursor: pointer; }
+      body .table .edit:hover {
+        background-color: #449d44;
+        border-color: #398439; }
+    body .table .delete {
+      border-radius: 2px;
+      background-color: #c13411;
+      border-color: #c13411;
+      color: #fff;
+      border: none;
+      padding: 4px;
+      cursor: pointer; }
+      body .table .delete:hover {
+        background-color: #831311;
+        border-color: #831311; }

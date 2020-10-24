@@ -30,7 +30,7 @@ const load = () => {
         modal.style.top = "-1000px";
         modal.style.right = "50";
     });
-    
+
     document.querySelector('#btn-cancel').addEventListener('click', () => {
         backgroundModal.style.display = "none";
         modal.style.top = "-1000px";
@@ -130,19 +130,19 @@ const createTable = (users) => {
         check.id = "checkBoxId";
         check.checked = false;
         const tdName = document.createElement("td");
-        tdName.classList.add("table-content");
+        tdName.classList.add("modal-footer");
         const tdEmail = document.createElement("td");
-        tdEmail.classList.add("table-content");
+        tdEmail.classList.add("modal-footer");
         const tdAddress = document.createElement("td");
-        tdAddress.classList.add("table-content");
+        tdAddress.classList.add("modal-footer");
         const tdPhone = document.createElement("td");
-        tdPhone.classList.add("table-content");
+        tdPhone.classList.add("modal-footer");
         const tdActions = document.createElement("td");
-        tdActions.classList.add("table-content");
+        tdActions.classList.add("modal-footer");
         const btnEdit = document.createElement("button");
-        btnEdit.classList.add("btn");
+        btnEdit.classList.add("edit");
         const btnDelete = document.createElement("button");
-        btnDelete.classList.add("btn");
+        btnDelete.classList.add("delete");
 
         console.log("ver si funciona el id", row.innerText)
         tdName.innerText = user.fullname;
@@ -175,7 +175,7 @@ const createTable = (users) => {
             document.querySelector("#email2").value = user.email;
             document.querySelector("#address2").value = user.address;
             document.querySelector("#phone2").value = user.phone;
-            document.querySelector(".btn-edit").addEventListener('click', () => {
+            document.querySelector("#btn-edit2").addEventListener('click', () => {
                 const editName = document.querySelector("#name2").value;
                 const editEmail = document.querySelector("#email2").value;
                 const editAddress = document.querySelector("#address2").value;
