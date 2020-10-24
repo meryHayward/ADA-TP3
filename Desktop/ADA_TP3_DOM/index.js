@@ -40,7 +40,6 @@ const load = () => {
     document.querySelector('#btn-add').addEventListener('click', () => {
         let isValid = true;
         const newName = document.querySelector("#name").value;
-        // si newName.length > 50 alert "che la cagaste, es muy largo tu name"
         if (!newName || newName.length > 50) {
             alert("Name: Not valid.");
             isValid = false;
@@ -82,18 +81,15 @@ const load = () => {
         checkAll();
     });
 
-    ///// EMPEZAMOS CON TABLA//////
+    ///// EMPEZAMOS CON TABLA //////
 
     getUsers();
-    //editUsers(newUser); no hace falta llamar a edit user cuando cargamos la pagina
 }
 
 const getUsers = async () => {
     try {
         const res = await axios.get(`https://5f7c70d600bd74001690ac5e.mockapi.io/users`);
-        const users = res.data;
-        // console.log(res.data)
-        createTable(users);
+        createTable(res.data);
     } catch (err) {
         console.error(err, `que pasa`);
     }
@@ -101,9 +97,8 @@ const getUsers = async () => {
 
 const editUsers = async (editUser, id) => { // newUser se podria llamar editedUser y pasar solo id del usuario a modificar
     try {
-        const res = await axios.put(`https://5f7c70d600bd74001690ac5e.mockapi.io/users/${id}`, editUser)
-        getUsers(); // aca lo que necesitamos es llamar a los usuarios nuevamente (a todos, no solo al que edite)
-        // console.log(res.data)
+        await axios.put(`https://5f7c70d600bd74001690ac5e.mockapi.io/users/${id}`, editUser);
+        getUsers();
     } catch (err) {
         console.log(err, `edito?`);
     }
@@ -111,7 +106,7 @@ const editUsers = async (editUser, id) => { // newUser se podria llamar editedUs
 
 const createUser = async (newUser) => {
     try {
-        const res = await axios.post(`https://5f7c70d600bd74001690ac5e.mockapi.io/users`, newUser);
+        await axios.post(`https://5f7c70d600bd74001690ac5e.mockapi.io/users`, newUser);
         getUsers();
     } catch (err) {
         console.log(err);
@@ -120,8 +115,7 @@ const createUser = async (newUser) => {
 
 const createTable = (users) => {
     const tbody = document.querySelector("#table-body");
-    tbody.innerHTML = ''; // para que cada vez que se llame a createTable el tbody este vacio y evitar que se dupliquen los datos
-    // let id = 01; no es necesario porque la api ya me trae el id
+    tbody.innerHTML = '';
     users.forEach(user => {
         const row = document.createElement("tr");
         row.classList.add("table")
@@ -146,11 +140,8 @@ const createTable = (users) => {
         const btnDelete = document.createElement("button");
         btnDelete.classList.add("delete");
 
-        // console.log("ver si funciona el id", row.innerText)
         tdName.innerText = user.fullname;
-        /* console.log(`ver que onda`, user.fullname) */
         tdEmail.innerText = user.email;
-        /*  console.log(`ver que onda`, user.email) */
         tdAddress.innerText = user.address;
         tdPhone.innerText = user.phone;
         btnEdit.innerText = "EDIT";
@@ -166,7 +157,6 @@ const createTable = (users) => {
         tdActions.appendChild(btnEdit);
         tdActions.appendChild(btnDelete);
         tbody.appendChild(row);
-        // console.log(tbody)
 
         const edit = user => {
             const modal = document.querySelector('#edit-modal');
@@ -212,5 +202,4 @@ const createTable = (users) => {
         modal2.style.top = "-1000px";
         modal2.style.right = "50";
     });
-
 }
