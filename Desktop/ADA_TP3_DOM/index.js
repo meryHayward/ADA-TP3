@@ -68,6 +68,10 @@ const load = () => {
         }
         if (isValid) {
             createUser(newUser);
+            document.querySelector("#name").value= '';
+            document.querySelector("#email").value = '';
+            document.querySelector("#address").value = '';
+            document.querySelector("#phone").value = '';
             backgroundModal.style.display = "none";
             modal.style.top = "-1000px";
             modal.style.right = "50";
