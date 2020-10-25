@@ -18,7 +18,7 @@
 
         <header class="container-header">
             <h2>Manage <span>Employees</span></h2>
-            <button type="button" class="container-btn" id="btn-modal" onclick="openbox(temp = 'openbox')"><i class="material-icons">&#xE147;</i>
+            <button type="button" class="container-btn" id="btn-modal" onclick="openbox(temp = 'addbox')"><i class="material-icons">&#xE147;</i>
                 <p>Add New Employee</p>
             </button>
         </header>
@@ -54,39 +54,43 @@
                 <input type="text" id="email">
             </label>
             <label for="address">Address
-                <textarea type="text" id="address"> </textarea>
+                <textarea type="text" id="address"></textarea>
             </label>
             <label for="phone">Phone
                 <input type="text" id="phone">
             </label>
         </form>
         <div class="modal-footer">
-            <button class="btn-cancel" id="btn-cancel" type="button" onclick="closebox(temp = 'cancelbox')">Cancel</button>
-            <button class="btn-add">Add</button>
+            <button class="btn-cancel" id="btn-cancel" type="button" onclick="closebox(temp = 'cerrarbox')">Cancel</button>
+            <button class="btn-add" id="btn-add">Add</button>
         </div>
     </section>
 
-    <section class="modal" id="modal-del">
+    <section class="modal" id="edit-modal">
         <div class="modal-header">
-            <h4>Delete Employee</h4>
-            <i class="material-icons" id="btn-modal-close" onclick="closebox(temp = 'delbox')">close</i>
+            <h4>Edit Employee</h4>
+            <i class="material-icons" id="btn-modal-close" onclick="closebox(temp = 'cerrarbox')">close</i>
         </div>
         <form class="modal-form" action="">
-            <label for="del-id">
-                <input type="text" id="del-id">
+            <label for="name">Name
+                <input type="text" id="name2">
             </label>
-            <label for="del-name">
-                <input type="text" id="del-name">
+            <label for="email">Email
+                <input type="text" id="email2">
+            </label>
+            <label for="address">Address
+                <textarea type="text" id="address2"> </textarea>
+            </label>
+            <label for="phone">Phone
+                <input type="text" id="phone2">
             </label>
         </form>
         <div class="modal-footer">
-            <p>Are you sure you want to delete these Records?</p>
-            <p class="text-warning">
-              <small>This action cannot be undone.</small>
-            </p>
-            <button class="btn-cancel" id="btn-cancel" type="button" onclick="closebox(temp = 'cancelbox')">Cancel</button>
-            <button class="btn-del">Delete</button>
+            <button class="btn-cancel" id="btn-cancel" type="button" onclick="closebox(temp = 'cerrarbox')">Cancel</button>
+            <button class="btn-edit" id="btn-edit2">Edit</button>
         </div>
     </section>
+
 </body>
+
 </html>
