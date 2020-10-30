@@ -54,7 +54,6 @@ const load = () => {
             // Cerrar modal
             closebox('cerrarbox'); // no recuerdo si hay otra forma de pasar un parametro statico
         }
-        
     });
 
     document.querySelector("#table-checkbox").addEventListener("click", () => { checkAll(); });
@@ -65,7 +64,7 @@ const load = () => {
 
 const getUsers = async () => {
     try {
-        const res = await axios.get(`https://5f7c70d600bd74001690ac5e.mockapi.io/users`);
+        const res = await axios.get(`https://5f925cdeeca67c001640968a.mockapi.io/users`);
         createTable(res.data);
     } catch (err) {
         console.error(err, `que pasa`);
@@ -74,7 +73,7 @@ const getUsers = async () => {
 
 const editUsers = async (editUser, id) => { // newUser se podria llamar editedUser y pasar solo id del usuario a modificar
     try {
-        await axios.put(`https://5f7c70d600bd74001690ac5e.mockapi.io/users/${id}`, editUser);
+        await axios.put(`https://5f925cdeeca67c001640968a.mockapi.io/users/${id}`, editUser);
         getUsers();
     } catch (err) {
         console.log(err, `edito?`);
@@ -83,7 +82,7 @@ const editUsers = async (editUser, id) => { // newUser se podria llamar editedUs
 
 const createUser = async (newUser) => {
     try {
-        await axios.post(`https://5f7c70d600bd74001690ac5e.mockapi.io/users`, newUser);
+        await axios.post(`https://5f925cdeeca67c001640968a.mockapi.io/users`, newUser);
         getUsers();
     } catch (err) {
         console.log(err);
@@ -95,8 +94,8 @@ const createTable = (users) => {
     tbody.innerHTML = '';
     users.forEach(user => {
         const row = document.createElement("tr");
-        row.classList.add("table");
-        row.setAttribute('id',`tableid${user.id}`);
+        row.classList.add("tablerow");
+        row.setAttribute("id",`empID${user.id}`);
         const tdCheck = document.createElement("td");
         tdCheck.classList.add("check");
         const check = document.createElement("input");
@@ -166,29 +165,29 @@ const createTable = (users) => {
             });
         }
         btnEdit.addEventListener("click", () => edit(user));
-
         // Proceso para Eliminar Employee
-        const delEmployee = user => {   
-            let empID = user.id;
-            console.log(empID);
-            axios.delete(`https://5f7c70d600bd74001690ac5e.mockapi.io/users/${empID}`)
-                .then(res => {
-                    console.log(res);
-                    console.log(res.data);
-                    // Remover row
-                    elem = btnDelete.closest('tr').id;
-                    delElem = document.querySelector(`#${elem}`);
-                    delElem.remove();
-                    //console.log(elem);
-                    //console.log(delElem);
-                })
-        };
-        btnDelete.addEventListener('click', () => delEmployee(user));
-        // Termina proceso de Eliminar Employee
-
+        btnDelete.addEventListener('click', () => delEmployee(btnDelete, user.id));
     });
 }
 
+// Proceso para Eliminar Employee
+const delEmployee = (btnDelete, userID) => {   
+    //console.log(btnDelete);
+    axios.delete(`https://5f925cdeeca67c001640968a.mockapi.io/users/${userID}`)
+        .then(res => {
+            console.log(`Usuario ELMINADO: `,userID)
+            // Remover row
+            const delElem = btnDelete.closest('tr');
+            delElem.classList.add("faded-out");
+            //console.log(delElem);
+            // Delay antes de que se elmine el dom
+            setTimeout(() => {
+                delElem.remove();
+            }, 2000);
+        })
+        .catch(error => console.error(error));
+};
+// Termina proceso de Eliminar Employee
 
 // Abrir modals
 const openbox = (modalType) => {

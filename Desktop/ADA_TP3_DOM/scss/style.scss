@@ -101,7 +101,14 @@ body {
 				margin: 15px 0 20px 0;
 				border-collapse: collapse;
 				vertical-align: middle;
-
+				tr {
+					transition: opacity 1s ease-out,transform 1s linear;
+					will-change: opacity;
+				}
+				.faded-out {
+					opacity: 0;
+					transform: translateX(-50vw);
+				}
                 th {
                     font-size: 14px;
                     font-weight: 700;
@@ -110,7 +117,7 @@ body {
                     padding: 12px 5px;
                     vertical-align: middle;
                     text-align: left;
-                }
+				}
 				#table-body {
 					border-top: 2px solid #e0e0e0;
                 }
@@ -244,7 +251,7 @@ body {
 		}
 	}
 
-	.table {
+	.tablerow {
 		border-bottom: 0.5px solid rgb(228, 228, 228);
 		height: 35px;
 		td {
