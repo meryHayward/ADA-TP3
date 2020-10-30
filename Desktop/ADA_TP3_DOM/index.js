@@ -108,6 +108,6 @@ const filter = (users) => {
     })
     }
 
-    filter(users);
+filter(users);
 
     
