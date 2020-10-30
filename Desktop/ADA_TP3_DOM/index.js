@@ -64,7 +64,7 @@ const load = () => {
 
 const getUsers = async () => {
     try {
-        const res = await axios.get(`https://5f925cdeeca67c001640968a.mockapi.io/users`);
+        const res = await axios.get(`https://5f7c70d600bd74001690ac5e.mockapi.io/users`);
         createTable(res.data);
     } catch (err) {
         console.error(err, `que pasa`);
@@ -73,7 +73,7 @@ const getUsers = async () => {
 
 const editUsers = async (editUser, id) => { // newUser se podria llamar editedUser y pasar solo id del usuario a modificar
     try {
-        await axios.put(`https://5f925cdeeca67c001640968a.mockapi.io/users/${id}`, editUser);
+        await axios.put(`https://5f7c70d600bd74001690ac5e.mockapi.io/users/${id}`, editUser);
         getUsers();
     } catch (err) {
         console.log(err, `edito?`);
@@ -82,7 +82,7 @@ const editUsers = async (editUser, id) => { // newUser se podria llamar editedUs
 
 const createUser = async (newUser) => {
     try {
-        await axios.post(`https://5f925cdeeca67c001640968a.mockapi.io/users`, newUser);
+        await axios.post(`https://5f7c70d600bd74001690ac5e.mockapi.io/users`, newUser);
         getUsers();
     } catch (err) {
         console.log(err);
@@ -173,7 +173,7 @@ const createTable = (users) => {
 // Proceso para Eliminar Employee
 const delEmployee = (btnDelete, userID) => {   
     //console.log(btnDelete);
-    axios.delete(`https://5f925cdeeca67c001640968a.mockapi.io/users/${userID}`)
+    axios.delete(`https://5f7c70d600bd74001690ac5e.mockapi.io/users${userID}`)
         .then(res => {
             console.log(`Usuario ELMINADO: `,userID)
             // Remover row
