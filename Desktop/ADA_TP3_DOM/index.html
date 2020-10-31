@@ -18,12 +18,14 @@
 
         <header class="container-header">
             <h2>Manage <span>Employees</span></h2>
-            <button type="button" class="container-btn" id="btn-modal"><i class="material-icons">&#xE147;</i>
+            <button type="button" class="container-btn" id="btn-modal" onclick="openbox(temp = 'addbox')"><i
+                    class="material-icons">&#xE147;</i>
                 <p>Add New Employee</p>
             </button>
         </header>
         <main>
-            <form class="main-form"><input id="search" type="text" placeholder="Filter"></form>
+            <form class="main-form"><input id="search" type="text" placeholder="Filter" /></form>
+            <!-- <button type="button" id="botoncito">x</button> -->
             <table class="main-table">
                 <thead>
                     <tr class="table-title">
@@ -44,7 +46,7 @@
     <section class="modal" id="modal">
         <div class="modal-header">
             <h4>Add Employee</h4>
-            <i class="material-icons" id="btn-modal-close">close</i>
+            <i class="material-icons" id="btn-modal-close" onclick="closebox(temp = 'addbox')">close</i>
         </div>
         <form class="modal-form" action="">
             <label for="name">Name
@@ -61,7 +63,8 @@
             </label>
         </form>
         <div class="modal-footer">
-            <button class="btn-cancel" id="btn-cancel" type="button">Cancel</button>
+            <button class="btn-cancel" id="btn-cancel" type="button"
+                onclick="closebox(temp = 'cerrarbox')">Cancel</button>
             <button class="btn-add" id="btn-add">Add</button>
         </div>
     </section>
@@ -69,12 +72,12 @@
     <section class="modal" id="edit-modal">
         <div class="modal-header">
             <h4>Edit Employee</h4>
-            <i class="material-icons" id="btn-modal-close2">close</i>
+            <i class="material-icons" id="btn-modal-close" onclick="closebox(temp = 'cerrarbox')">close</i>
         </div>
         <form class="modal-form" action="">
             <label for="name">Name
                 <input type="text" id="name2">
-            </label>›
+            </label>
             <label for="email">Email
                 <input type="text" id="email2">
             </label>
@@ -86,7 +89,8 @@
             </label>
         </form>
         <div class="modal-footer">
-            <button class="btn-cancel" id="btn-cancel2" type="button">Cancel</button>
+            <button class="btn-cancel" id="btn-cancel" type="button"
+                onclick="closebox(temp = 'cerrarbox')">Cancel</button>
             <button class="btn-edit" id="btn-edit2">Edit</button>
         </div>
     </section>

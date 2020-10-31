@@ -1,3 +1,4 @@
+// Validar Inputs
 const validateEmail = (email) => {
     const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(String(email).toLowerCase());
@@ -14,33 +15,10 @@ const checkAll = () => {
 }
 
 const load = () => {
-    const modal = document.querySelector('.modal');
-
-    const backgroundModal = document.querySelector('.background-modal')
-    const btnModalClose = document.querySelector('#btn-modal-close')
-
-    document.querySelector('#btn-modal').addEventListener('click', () => {
-        backgroundModal.style.display = "block";
-        modal.style.top = "0";
-        modal.style.right = "50";
-    });
-
-    document.querySelector('#btn-modal-close').addEventListener('click', () => {
-        backgroundModal.style.display = "none";
-        modal.style.top = "-1000px";
-        modal.style.right = "50";
-    });
-
-    document.querySelector('#btn-cancel').addEventListener('click', () => {
-        backgroundModal.style.display = "none";
-        modal.style.top = "-1000px";
-        modal.style.right = "50";
-    });
-
+    // Add New Employee
     document.querySelector('#btn-add').addEventListener('click', () => {
         let isValid = true;
         const newName = document.querySelector("#name").value;
-        // si newName.length > 50 alert "che la cagaste, es muy largo tu name"
         if (!newName || newName.length > 50) {
             alert("Name: Not valid.");
             isValid = false;
@@ -68,38 +46,38 @@ const load = () => {
         }
         if (isValid) {
             createUser(newUser);
-            backgroundModal.style.display = "none";
-            modal.style.top = "-1000px";
-            modal.style.right = "50";
+            document.querySelector("#name").value = '';
+            document.querySelector("#email").value = '';
+            document.querySelector("#address").value = '';
+            document.querySelector("#phone").value = '';
+
+            // Cerrar modal
+            closebox('cerrarbox'); // no recuerdo si hay otra forma de pasar un parametro statico
         }
     });
 
-    document.querySelector("#table-checkbox").addEventListener("click", () => {
-        checkAll();
-    });
+    document.querySelector("#table-checkbox").addEventListener("click", () => { checkAll(); });
 
-    ///// EMPEZAMOS CON TABLA//////
-
+    // Cargar datos
     getUsers();
-    //editUsers(newUser); no hace falta llamar a edit user cuando cargamos la pagina
 }
 
+let users;
+
 const getUsers = async () => {
-    try {
-        const res = await axios.get(`https://5f7c70d600bd74001690ac5e.mockapi.io/users`);
-        const users = res.data;
-        // console.log(res.data)
-        createTable(users);
-    } catch (err) {
-        console.error(err, `que pasa`);
-    }
+    await axios.get("https://5f7c70d600bd74001690ac5e.mockapi.io/users")
+        .then(res => {
+            users = res.data;
+            createTable(users);
+            filter(users);
+        })
+        .catch(err => alert("Hubo un error"));
 }
 
 const editUsers = async (editUser, id) => { // newUser se podria llamar editedUser y pasar solo id del usuario a modificar
     try {
-        const res = await axios.put(`https://5f7c70d600bd74001690ac5e.mockapi.io/users/${id}`, editUser)
-        getUsers(); // aca lo que necesitamos es llamar a los usuarios nuevamente (a todos, no solo al que edite)
-        // console.log(res.data)
+        await axios.put(`https://5f7c70d600bd74001690ac5e.mockapi.io/users/${id}`, editUser);
+        getUsers();
     } catch (err) {
         console.log(err, `edito?`);
     }
@@ -107,20 +85,24 @@ const editUsers = async (editUser, id) => { // newUser se podria llamar editedUs
 
 const createUser = async (newUser) => {
     try {
-        const res = await axios.post(`https://5f7c70d600bd74001690ac5e.mockapi.io/users`, newUser);
+        await axios.post(`https://5f7c70d600bd74001690ac5e.mockapi.io/users`, newUser);
         getUsers();
     } catch (err) {
         console.log(err);
     }
 }
 
+
 const createTable = (users) => {
+
     const tbody = document.querySelector("#table-body");
-    tbody.innerHTML = ''; // para que cada vez que se llame a createTable el tbody este vacio y evitar que se dupliquen los datos
-    // let id = 01; no es necesario porque la api ya me trae el id
+
+    tbody.innerHTML = ''
+
     users.forEach(user => {
         const row = document.createElement("tr");
-        row.classList.add("table")
+        row.classList.add("tablerow");
+        row.setAttribute("id", `empID-${user.id}`);
         const tdCheck = document.createElement("td");
         tdCheck.classList.add("check");
         const check = document.createElement("input");
@@ -142,11 +124,8 @@ const createTable = (users) => {
         const btnDelete = document.createElement("button");
         btnDelete.classList.add("delete");
 
-        // console.log("ver si funciona el id", row.innerText)
         tdName.innerText = user.fullname;
-        /* console.log(`ver que onda`, user.fullname) */
         tdEmail.innerText = user.email;
-        /*  console.log(`ver que onda`, user.email) */
         tdAddress.innerText = user.address;
         tdPhone.innerText = user.phone;
         btnEdit.innerText = "EDIT";
@@ -158,22 +137,21 @@ const createTable = (users) => {
         row.appendChild(tdEmail);
         row.appendChild(tdAddress);
         row.appendChild(tdPhone);
-        row.appendChild(tdActions);
         tdActions.appendChild(btnEdit);
         tdActions.appendChild(btnDelete);
+        row.appendChild(tdActions);
         tbody.appendChild(row);
-        // console.log(tbody)
 
         const edit = user => {
-            const modal = document.querySelector('#edit-modal');
-            backgroundModal.style.display = "block";
-            modal.style.top = "0";
-            modal.style.right = "50";
+
+            // Abrir Edit Modal
+            openbox('editbox');
+
             document.querySelector("#name2").value = user.fullname;
             document.querySelector("#email2").value = user.email;
             document.querySelector("#address2").value = user.address;
             document.querySelector("#phone2").value = user.phone;
-            document.querySelector("#btn-edit2").addEventListener('click', () => {
+            const editAction = () => {
                 const editName = document.querySelector("#name2").value;
                 const editEmail = document.querySelector("#email2").value;
                 const editAddress = document.querySelector("#address2").value;
@@ -188,25 +166,115 @@ const createTable = (users) => {
                 }
 
                 editUsers(editUser, user.id);
-                backgroundModal.style.display = "none";
-                modal2.style.top = "-1000px";
-                modal2.style.right = "50";
-            });
+
+                // Cerrar modal
+                closebox('cerrarbox');
+                removeEditListener();
+            };
+            const removeEditListener = () => {
+                document.querySelector("#btn-modal-close").removeEventListener("click", removeEditListener)
+                document.querySelector("#btn-cancel").removeEventListener("click", removeEditListener)
+                document.querySelector("#btn-edit2").removeEventListener('click', editAction);
+            }
+            document.querySelector("#btn-modal-close").addEventListener("click", removeEventListener)
+            document.querySelector("#btn-cancel").addEventListener("click", removeEditListener);
+            document.querySelector("#btn-edit2").addEventListener('click', editAction);
         }
         btnEdit.addEventListener("click", () => edit(user));
-    });
 
-    const modal2 = document.querySelector('#edit-modal');
+        // Proceso para Eliminar Employee
+        btnDelete.addEventListener('click', () => delEmployee(btnDelete, user.id));
+    });
+}
+
+// Proceso para Eliminar Employee
+const delEmployee = (btnDelete, userID) => {
+    axios.delete(`https://5f7c70d600bd74001690ac5e.mockapi.io/users/${userID}`)
+        .then(res => {
+            console.log(`Usuario ELMINADO: `, userID)
+
+            // Remover row
+            const delElem = btnDelete.closest('tr');
+            delElem.classList.add("faded-out");
+            setTimeout(() => {
+                delElem.remove();
+            }, 2000);
+        })
+        .catch(error => console.error(error));
+};
+
+// Abrir modals
+const openbox = (modalType) => {
+    const modal = document.querySelector('#modal');
+    const modalEdit = document.querySelector('#edit-modal');
     const backgroundModal = document.querySelector('.background-modal')
-    document.querySelector('#btn-modal-close2').addEventListener('click', () => {
-        backgroundModal.style.display = "none";
-        modal2.style.top = "-1000px";
-        modal2.style.right = "50";
-    });
-    document.querySelector('#btn-cancel2').addEventListener('click', () => {
-        backgroundModal.style.display = "none";
-        modal2.style.top = "-1000px";
-        modal2.style.right = "50";
-    });
+
+    switch (modalType) {
+        case 'addbox':
+            backgroundModal.style.display = "block";
+            modal.style.top = "0";
+            break;
+        case 'editbox':
+            backgroundModal.style.display = "block";
+            modalEdit.style.top = "0";
+            break;
+    }
+}
+
+// Cerrar modals
+const closebox = (modalType) => {
+    const backgroundModal = document.querySelector('.background-modal');
+    const modalAdd = document.querySelector('#modal');
+    const modalEdit = document.querySelector('#edit-modal');
+
+    switch (modalType) {
+        case 'addbox':
+            backgroundModal.style.display = "none";
+            modalAdd.style.top = "-1000px";
+            break;
+        case 'editbox':
+            backgroundModal.style.display = "none";
+            modalEdit.style.top = "-1000px";
+            break;
+        case 'cerrarbox':
+            backgroundModal.style.display = "none";
+            modalAdd.style.top = "-1000px";
+            modalEdit.style.top = "-1000px";
+            break;
+    }
 
 }
+
+// Cerrar al hacer click fuera del modal
+window.onclick = (event) => {
+    const backgroundModal = document.querySelector('.background-modal');
+    const modalAdd = document.querySelector('#modal');
+    const modalEdit = document.querySelector('#edit-modal');
+    if (event.target === backgroundModal) {
+        backgroundModal.style.display = "none";
+        modalAdd.style.top = "-1000px";
+        modalEdit.style.top = "-1000px";
+    }
+}
+
+
+const filter = (users) => {
+    const buscador = document.querySelector("#search");
+
+    buscador.addEventListener('keyup', e => {
+        const inputFilter = buscador.value.toLowerCase();
+
+        const resultados = users.filter(user => {
+            if (
+                user.fullname.toLowerCase().includes(inputFilter)
+            ) {
+                return true;
+            } else {
+                return false;
+            }
+        })
+        createTable(resultados);
+    })
+}
+
+// filter(users);
